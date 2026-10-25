@@ -1,0 +1,135 @@
+<?xml version='1.0' encoding='utf-8'?>
+<GameData>
+  <Types>
+    <Row Type="BUILDING_FDT_FOOD_P_1" Kind="KIND_BUILDING" />
+    <Row Type="BUILDING_FDT_FOOD_N_1" Kind="KIND_BUILDING" />
+    <Row Type="BUILDING_FDT_FOOD_P_2" Kind="KIND_BUILDING" />
+    <Row Type="BUILDING_FDT_FOOD_N_2" Kind="KIND_BUILDING" />
+    <Row Type="BUILDING_FDT_FOOD_P_4" Kind="KIND_BUILDING" />
+    <Row Type="BUILDING_FDT_FOOD_N_4" Kind="KIND_BUILDING" />
+    <Row Type="BUILDING_FDT_FOOD_P_8" Kind="KIND_BUILDING" />
+    <Row Type="BUILDING_FDT_FOOD_N_8" Kind="KIND_BUILDING" />
+    <Row Type="BUILDING_FDT_FOOD_P_16" Kind="KIND_BUILDING" />
+    <Row Type="BUILDING_FDT_FOOD_N_16" Kind="KIND_BUILDING" />
+    <Row Type="BUILDING_FDT_FOOD_P_32" Kind="KIND_BUILDING" />
+    <Row Type="BUILDING_FDT_FOOD_N_32" Kind="KIND_BUILDING" />
+    <Row Type="BUILDING_FDT_FOOD_P_64" Kind="KIND_BUILDING" />
+    <Row Type="BUILDING_FDT_FOOD_N_64" Kind="KIND_BUILDING" />
+    <Row Type="BUILDING_FDT_FOOD_P_128" Kind="KIND_BUILDING" />
+    <Row Type="BUILDING_FDT_FOOD_N_128" Kind="KIND_BUILDING" />
+    <Row Type="BUILDING_FDT_FOOD_P_256" Kind="KIND_BUILDING" />
+    <Row Type="BUILDING_FDT_FOOD_N_256" Kind="KIND_BUILDING" />
+    <Row Type="BUILDING_FDT_FOOD_P_512" Kind="KIND_BUILDING" />
+    <Row Type="BUILDING_FDT_FOOD_N_512" Kind="KIND_BUILDING" />
+    <Row Type="BUILDING_FDT_FOOD_P_1024" Kind="KIND_BUILDING" />
+    <Row Type="BUILDING_FDT_FOOD_N_1024" Kind="KIND_BUILDING" />
+    <Row Type="BUILDING_FDT_FOOD_P_2048" Kind="KIND_BUILDING" />
+    <Row Type="BUILDING_FDT_FOOD_N_2048" Kind="KIND_BUILDING" />
+    <Row Type="BUILDING_FDT_FOOD_P_4096" Kind="KIND_BUILDING" />
+    <Row Type="BUILDING_FDT_FOOD_N_4096" Kind="KIND_BUILDING" />
+    <Row Type="BUILDING_FDT_FOOD_P_8192" Kind="KIND_BUILDING" />
+    <Row Type="BUILDING_FDT_FOOD_N_8192" Kind="KIND_BUILDING" />
+    <Row Type="BUILDING_FDT_FOOD_P_16384" Kind="KIND_BUILDING" />
+    <Row Type="BUILDING_FDT_FOOD_N_16384" Kind="KIND_BUILDING" />
+    <Row Type="BUILDING_FDT_FOOD_P_32768" Kind="KIND_BUILDING" />
+    <Row Type="BUILDING_FDT_FOOD_N_32768" Kind="KIND_BUILDING" />
+    <Row Type="BUILDING_FDT_FOOD_P_65536" Kind="KIND_BUILDING" />
+    <Row Type="BUILDING_FDT_FOOD_N_65536" Kind="KIND_BUILDING" />
+    <Row Type="BUILDING_FDT_FOOD_P_131072" Kind="KIND_BUILDING" />
+    <Row Type="BUILDING_FDT_FOOD_N_131072" Kind="KIND_BUILDING" />
+    <Row Type="BUILDING_FDT_FOOD_P_262144" Kind="KIND_BUILDING" />
+    <Row Type="BUILDING_FDT_FOOD_N_262144" Kind="KIND_BUILDING" />
+    <Row Type="BUILDING_FDT_FOOD_P_524288" Kind="KIND_BUILDING" />
+    <Row Type="BUILDING_FDT_FOOD_N_524288" Kind="KIND_BUILDING" />
+    <Row Type="BUILDING_FDT_FOOD_P_1048576" Kind="KIND_BUILDING" />
+    <Row Type="BUILDING_FDT_FOOD_N_1048576" Kind="KIND_BUILDING" />
+  </Types>
+  <Buildings>
+    <Row BuildingType="BUILDING_FDT_FOOD_P_1" Name="LOC_BUILDING_FDT_FOOD_NAME" Description="LOC_BUILDING_FDT_FOOD_DESCRIPTION" Cost="1" InternalOnly="1" PrereqDistrict="DISTRICT_CITY_CENTER" Maintenance="0" />
+    <Row BuildingType="BUILDING_FDT_FOOD_N_1" Name="LOC_BUILDING_FDT_FOOD_NAME" Description="LOC_BUILDING_FDT_FOOD_DESCRIPTION" Cost="1" InternalOnly="1" PrereqDistrict="DISTRICT_CITY_CENTER" Maintenance="0" />
+    <Row BuildingType="BUILDING_FDT_FOOD_P_2" Name="LOC_BUILDING_FDT_FOOD_NAME" Description="LOC_BUILDING_FDT_FOOD_DESCRIPTION" Cost="1" InternalOnly="1" PrereqDistrict="DISTRICT_CITY_CENTER" Maintenance="0" />
+    <Row BuildingType="BUILDING_FDT_FOOD_N_2" Name="LOC_BUILDING_FDT_FOOD_NAME" Description="LOC_BUILDING_FDT_FOOD_DESCRIPTION" Cost="1" InternalOnly="1" PrereqDistrict="DISTRICT_CITY_CENTER" Maintenance="0" />
+    <Row BuildingType="BUILDING_FDT_FOOD_P_4" Name="LOC_BUILDING_FDT_FOOD_NAME" Description="LOC_BUILDING_FDT_FOOD_DESCRIPTION" Cost="1" InternalOnly="1" PrereqDistrict="DISTRICT_CITY_CENTER" Maintenance="0" />
+    <Row BuildingType="BUILDING_FDT_FOOD_N_4" Name="LOC_BUILDING_FDT_FOOD_NAME" Description="LOC_BUILDING_FDT_FOOD_DESCRIPTION" Cost="1" InternalOnly="1" PrereqDistrict="DISTRICT_CITY_CENTER" Maintenance="0" />
+    <Row BuildingType="BUILDING_FDT_FOOD_P_8" Name="LOC_BUILDING_FDT_FOOD_NAME" Description="LOC_BUILDING_FDT_FOOD_DESCRIPTION" Cost="1" InternalOnly="1" PrereqDistrict="DISTRICT_CITY_CENTER" Maintenance="0" />
+    <Row BuildingType="BUILDING_FDT_FOOD_N_8" Name="LOC_BUILDING_FDT_FOOD_NAME" Description="LOC_BUILDING_FDT_FOOD_DESCRIPTION" Cost="1" InternalOnly="1" PrereqDistrict="DISTRICT_CITY_CENTER" Maintenance="0" />
+    <Row BuildingType="BUILDING_FDT_FOOD_P_16" Name="LOC_BUILDING_FDT_FOOD_NAME" Description="LOC_BUILDING_FDT_FOOD_DESCRIPTION" Cost="1" InternalOnly="1" PrereqDistrict="DISTRICT_CITY_CENTER" Maintenance="0" />
+    <Row BuildingType="BUILDING_FDT_FOOD_N_16" Name="LOC_BUILDING_FDT_FOOD_NAME" Description="LOC_BUILDING_FDT_FOOD_DESCRIPTION" Cost="1" InternalOnly="1" PrereqDistrict="DISTRICT_CITY_CENTER" Maintenance="0" />
+    <Row BuildingType="BUILDING_FDT_FOOD_P_32" Name="LOC_BUILDING_FDT_FOOD_NAME" Description="LOC_BUILDING_FDT_FOOD_DESCRIPTION" Cost="1" InternalOnly="1" PrereqDistrict="DISTRICT_CITY_CENTER" Maintenance="0" />
+    <Row BuildingType="BUILDING_FDT_FOOD_N_32" Name="LOC_BUILDING_FDT_FOOD_NAME" Description="LOC_BUILDING_FDT_FOOD_DESCRIPTION" Cost="1" InternalOnly="1" PrereqDistrict="DISTRICT_CITY_CENTER" Maintenance="0" />
+    <Row BuildingType="BUILDING_FDT_FOOD_P_64" Name="LOC_BUILDING_FDT_FOOD_NAME" Description="LOC_BUILDING_FDT_FOOD_DESCRIPTION" Cost="1" InternalOnly="1" PrereqDistrict="DISTRICT_CITY_CENTER" Maintenance="0" />
+    <Row BuildingType="BUILDING_FDT_FOOD_N_64" Name="LOC_BUILDING_FDT_FOOD_NAME" Description="LOC_BUILDING_FDT_FOOD_DESCRIPTION" Cost="1" InternalOnly="1" PrereqDistrict="DISTRICT_CITY_CENTER" Maintenance="0" />
+    <Row BuildingType="BUILDING_FDT_FOOD_P_128" Name="LOC_BUILDING_FDT_FOOD_NAME" Description="LOC_BUILDING_FDT_FOOD_DESCRIPTION" Cost="1" InternalOnly="1" PrereqDistrict="DISTRICT_CITY_CENTER" Maintenance="0" />
+    <Row BuildingType="BUILDING_FDT_FOOD_N_128" Name="LOC_BUILDING_FDT_FOOD_NAME" Description="LOC_BUILDING_FDT_FOOD_DESCRIPTION" Cost="1" InternalOnly="1" PrereqDistrict="DISTRICT_CITY_CENTER" Maintenance="0" />
+    <Row BuildingType="BUILDING_FDT_FOOD_P_256" Name="LOC_BUILDING_FDT_FOOD_NAME" Description="LOC_BUILDING_FDT_FOOD_DESCRIPTION" Cost="1" InternalOnly="1" PrereqDistrict="DISTRICT_CITY_CENTER" Maintenance="0" />
+    <Row BuildingType="BUILDING_FDT_FOOD_N_256" Name="LOC_BUILDING_FDT_FOOD_NAME" Description="LOC_BUILDING_FDT_FOOD_DESCRIPTION" Cost="1" InternalOnly="1" PrereqDistrict="DISTRICT_CITY_CENTER" Maintenance="0" />
+    <Row BuildingType="BUILDING_FDT_FOOD_P_512" Name="LOC_BUILDING_FDT_FOOD_NAME" Description="LOC_BUILDING_FDT_FOOD_DESCRIPTION" Cost="1" InternalOnly="1" PrereqDistrict="DISTRICT_CITY_CENTER" Maintenance="0" />
+    <Row BuildingType="BUILDING_FDT_FOOD_N_512" Name="LOC_BUILDING_FDT_FOOD_NAME" Description="LOC_BUILDING_FDT_FOOD_DESCRIPTION" Cost="1" InternalOnly="1" PrereqDistrict="DISTRICT_CITY_CENTER" Maintenance="0" />
+    <Row BuildingType="BUILDING_FDT_FOOD_P_1024" Name="LOC_BUILDING_FDT_FOOD_NAME" Description="LOC_BUILDING_FDT_FOOD_DESCRIPTION" Cost="1" InternalOnly="1" PrereqDistrict="DISTRICT_CITY_CENTER" Maintenance="0" />
+    <Row BuildingType="BUILDING_FDT_FOOD_N_1024" Name="LOC_BUILDING_FDT_FOOD_NAME" Description="LOC_BUILDING_FDT_FOOD_DESCRIPTION" Cost="1" InternalOnly="1" PrereqDistrict="DISTRICT_CITY_CENTER" Maintenance="0" />
+    <Row BuildingType="BUILDING_FDT_FOOD_P_2048" Name="LOC_BUILDING_FDT_FOOD_NAME" Description="LOC_BUILDING_FDT_FOOD_DESCRIPTION" Cost="1" InternalOnly="1" PrereqDistrict="DISTRICT_CITY_CENTER" Maintenance="0" />
+    <Row BuildingType="BUILDING_FDT_FOOD_N_2048" Name="LOC_BUILDING_FDT_FOOD_NAME" Description="LOC_BUILDING_FDT_FOOD_DESCRIPTION" Cost="1" InternalOnly="1" PrereqDistrict="DISTRICT_CITY_CENTER" Maintenance="0" />
+    <Row BuildingType="BUILDING_FDT_FOOD_P_4096" Name="LOC_BUILDING_FDT_FOOD_NAME" Description="LOC_BUILDING_FDT_FOOD_DESCRIPTION" Cost="1" InternalOnly="1" PrereqDistrict="DISTRICT_CITY_CENTER" Maintenance="0" />
+    <Row BuildingType="BUILDING_FDT_FOOD_N_4096" Name="LOC_BUILDING_FDT_FOOD_NAME" Description="LOC_BUILDING_FDT_FOOD_DESCRIPTION" Cost="1" InternalOnly="1" PrereqDistrict="DISTRICT_CITY_CENTER" Maintenance="0" />
+    <Row BuildingType="BUILDING_FDT_FOOD_P_8192" Name="LOC_BUILDING_FDT_FOOD_NAME" Description="LOC_BUILDING_FDT_FOOD_DESCRIPTION" Cost="1" InternalOnly="1" PrereqDistrict="DISTRICT_CITY_CENTER" Maintenance="0" />
+    <Row BuildingType="BUILDING_FDT_FOOD_N_8192" Name="LOC_BUILDING_FDT_FOOD_NAME" Description="LOC_BUILDING_FDT_FOOD_DESCRIPTION" Cost="1" InternalOnly="1" PrereqDistrict="DISTRICT_CITY_CENTER" Maintenance="0" />
+    <Row BuildingType="BUILDING_FDT_FOOD_P_16384" Name="LOC_BUILDING_FDT_FOOD_NAME" Description="LOC_BUILDING_FDT_FOOD_DESCRIPTION" Cost="1" InternalOnly="1" PrereqDistrict="DISTRICT_CITY_CENTER" Maintenance="0" />
+    <Row BuildingType="BUILDING_FDT_FOOD_N_16384" Name="LOC_BUILDING_FDT_FOOD_NAME" Description="LOC_BUILDING_FDT_FOOD_DESCRIPTION" Cost="1" InternalOnly="1" PrereqDistrict="DISTRICT_CITY_CENTER" Maintenance="0" />
+    <Row BuildingType="BUILDING_FDT_FOOD_P_32768" Name="LOC_BUILDING_FDT_FOOD_NAME" Description="LOC_BUILDING_FDT_FOOD_DESCRIPTION" Cost="1" InternalOnly="1" PrereqDistrict="DISTRICT_CITY_CENTER" Maintenance="0" />
+    <Row BuildingType="BUILDING_FDT_FOOD_N_32768" Name="LOC_BUILDING_FDT_FOOD_NAME" Description="LOC_BUILDING_FDT_FOOD_DESCRIPTION" Cost="1" InternalOnly="1" PrereqDistrict="DISTRICT_CITY_CENTER" Maintenance="0" />
+    <Row BuildingType="BUILDING_FDT_FOOD_P_65536" Name="LOC_BUILDING_FDT_FOOD_NAME" Description="LOC_BUILDING_FDT_FOOD_DESCRIPTION" Cost="1" InternalOnly="1" PrereqDistrict="DISTRICT_CITY_CENTER" Maintenance="0" />
+    <Row BuildingType="BUILDING_FDT_FOOD_N_65536" Name="LOC_BUILDING_FDT_FOOD_NAME" Description="LOC_BUILDING_FDT_FOOD_DESCRIPTION" Cost="1" InternalOnly="1" PrereqDistrict="DISTRICT_CITY_CENTER" Maintenance="0" />
+    <Row BuildingType="BUILDING_FDT_FOOD_P_131072" Name="LOC_BUILDING_FDT_FOOD_NAME" Description="LOC_BUILDING_FDT_FOOD_DESCRIPTION" Cost="1" InternalOnly="1" PrereqDistrict="DISTRICT_CITY_CENTER" Maintenance="0" />
+    <Row BuildingType="BUILDING_FDT_FOOD_N_131072" Name="LOC_BUILDING_FDT_FOOD_NAME" Description="LOC_BUILDING_FDT_FOOD_DESCRIPTION" Cost="1" InternalOnly="1" PrereqDistrict="DISTRICT_CITY_CENTER" Maintenance="0" />
+    <Row BuildingType="BUILDING_FDT_FOOD_P_262144" Name="LOC_BUILDING_FDT_FOOD_NAME" Description="LOC_BUILDING_FDT_FOOD_DESCRIPTION" Cost="1" InternalOnly="1" PrereqDistrict="DISTRICT_CITY_CENTER" Maintenance="0" />
+    <Row BuildingType="BUILDING_FDT_FOOD_N_262144" Name="LOC_BUILDING_FDT_FOOD_NAME" Description="LOC_BUILDING_FDT_FOOD_DESCRIPTION" Cost="1" InternalOnly="1" PrereqDistrict="DISTRICT_CITY_CENTER" Maintenance="0" />
+    <Row BuildingType="BUILDING_FDT_FOOD_P_524288" Name="LOC_BUILDING_FDT_FOOD_NAME" Description="LOC_BUILDING_FDT_FOOD_DESCRIPTION" Cost="1" InternalOnly="1" PrereqDistrict="DISTRICT_CITY_CENTER" Maintenance="0" />
+    <Row BuildingType="BUILDING_FDT_FOOD_N_524288" Name="LOC_BUILDING_FDT_FOOD_NAME" Description="LOC_BUILDING_FDT_FOOD_DESCRIPTION" Cost="1" InternalOnly="1" PrereqDistrict="DISTRICT_CITY_CENTER" Maintenance="0" />
+    <Row BuildingType="BUILDING_FDT_FOOD_P_1048576" Name="LOC_BUILDING_FDT_FOOD_NAME" Description="LOC_BUILDING_FDT_FOOD_DESCRIPTION" Cost="1" InternalOnly="1" PrereqDistrict="DISTRICT_CITY_CENTER" Maintenance="0" />
+    <Row BuildingType="BUILDING_FDT_FOOD_N_1048576" Name="LOC_BUILDING_FDT_FOOD_NAME" Description="LOC_BUILDING_FDT_FOOD_DESCRIPTION" Cost="1" InternalOnly="1" PrereqDistrict="DISTRICT_CITY_CENTER" Maintenance="0" />
+  </Buildings>
+  <Building_YieldChanges>
+    <Row BuildingType="BUILDING_FDT_FOOD_P_1" YieldType="YIELD_FOOD" YieldChange="1" />
+    <Row BuildingType="BUILDING_FDT_FOOD_N_1" YieldType="YIELD_FOOD" YieldChange="-1" />
+    <Row BuildingType="BUILDING_FDT_FOOD_P_2" YieldType="YIELD_FOOD" YieldChange="2" />
+    <Row BuildingType="BUILDING_FDT_FOOD_N_2" YieldType="YIELD_FOOD" YieldChange="-2" />
+    <Row BuildingType="BUILDING_FDT_FOOD_P_4" YieldType="YIELD_FOOD" YieldChange="4" />
+    <Row BuildingType="BUILDING_FDT_FOOD_N_4" YieldType="YIELD_FOOD" YieldChange="-4" />
+    <Row BuildingType="BUILDING_FDT_FOOD_P_8" YieldType="YIELD_FOOD" YieldChange="8" />
+    <Row BuildingType="BUILDING_FDT_FOOD_N_8" YieldType="YIELD_FOOD" YieldChange="-8" />
+    <Row BuildingType="BUILDING_FDT_FOOD_P_16" YieldType="YIELD_FOOD" YieldChange="16" />
+    <Row BuildingType="BUILDING_FDT_FOOD_N_16" YieldType="YIELD_FOOD" YieldChange="-16" />
+    <Row BuildingType="BUILDING_FDT_FOOD_P_32" YieldType="YIELD_FOOD" YieldChange="32" />
+    <Row BuildingType="BUILDING_FDT_FOOD_N_32" YieldType="YIELD_FOOD" YieldChange="-32" />
+    <Row BuildingType="BUILDING_FDT_FOOD_P_64" YieldType="YIELD_FOOD" YieldChange="64" />
+    <Row BuildingType="BUILDING_FDT_FOOD_N_64" YieldType="YIELD_FOOD" YieldChange="-64" />
+    <Row BuildingType="BUILDING_FDT_FOOD_P_128" YieldType="YIELD_FOOD" YieldChange="128" />
+    <Row BuildingType="BUILDING_FDT_FOOD_N_128" YieldType="YIELD_FOOD" YieldChange="-128" />
+    <Row BuildingType="BUILDING_FDT_FOOD_P_256" YieldType="YIELD_FOOD" YieldChange="256" />
+    <Row BuildingType="BUILDING_FDT_FOOD_N_256" YieldType="YIELD_FOOD" YieldChange="-256" />
+    <Row BuildingType="BUILDING_FDT_FOOD_P_512" YieldType="YIELD_FOOD" YieldChange="512" />
+    <Row BuildingType="BUILDING_FDT_FOOD_N_512" YieldType="YIELD_FOOD" YieldChange="-512" />
+    <Row BuildingType="BUILDING_FDT_FOOD_P_1024" YieldType="YIELD_FOOD" YieldChange="1024" />
+    <Row BuildingType="BUILDING_FDT_FOOD_N_1024" YieldType="YIELD_FOOD" YieldChange="-1024" />
+    <Row BuildingType="BUILDING_FDT_FOOD_P_2048" YieldType="YIELD_FOOD" YieldChange="2048" />
+    <Row BuildingType="BUILDING_FDT_FOOD_N_2048" YieldType="YIELD_FOOD" YieldChange="-2048" />
+    <Row BuildingType="BUILDING_FDT_FOOD_P_4096" YieldType="YIELD_FOOD" YieldChange="4096" />
+    <Row BuildingType="BUILDING_FDT_FOOD_N_4096" YieldType="YIELD_FOOD" YieldChange="-4096" />
+    <Row BuildingType="BUILDING_FDT_FOOD_P_8192" YieldType="YIELD_FOOD" YieldChange="8192" />
+    <Row BuildingType="BUILDING_FDT_FOOD_N_8192" YieldType="YIELD_FOOD" YieldChange="-8192" />
+    <Row BuildingType="BUILDING_FDT_FOOD_P_16384" YieldType="YIELD_FOOD" YieldChange="16384" />
+    <Row BuildingType="BUILDING_FDT_FOOD_N_16384" YieldType="YIELD_FOOD" YieldChange="-16384" />
+    <Row BuildingType="BUILDING_FDT_FOOD_P_32768" YieldType="YIELD_FOOD" YieldChange="32768" />
+    <Row BuildingType="BUILDING_FDT_FOOD_N_32768" YieldType="YIELD_FOOD" YieldChange="-32768" />
+    <Row BuildingType="BUILDING_FDT_FOOD_P_65536" YieldType="YIELD_FOOD" YieldChange="65536" />
+    <Row BuildingType="BUILDING_FDT_FOOD_N_65536" YieldType="YIELD_FOOD" YieldChange="-65536" />
+    <Row BuildingType="BUILDING_FDT_FOOD_P_131072" YieldType="YIELD_FOOD" YieldChange="131072" />
+    <Row BuildingType="BUILDING_FDT_FOOD_N_131072" YieldType="YIELD_FOOD" YieldChange="-131072" />
+    <Row BuildingType="BUILDING_FDT_FOOD_P_262144" YieldType="YIELD_FOOD" YieldChange="262144" />
+    <Row BuildingType="BUILDING_FDT_FOOD_N_262144" YieldType="YIELD_FOOD" YieldChange="-262144" />
+    <Row BuildingType="BUILDING_FDT_FOOD_P_524288" YieldType="YIELD_FOOD" YieldChange="524288" />
+    <Row BuildingType="BUILDING_FDT_FOOD_N_524288" YieldType="YIELD_FOOD" YieldChange="-524288" />
+    <Row BuildingType="BUILDING_FDT_FOOD_P_1048576" YieldType="YIELD_FOOD" YieldChange="1048576" />
+    <Row BuildingType="BUILDING_FDT_FOOD_N_1048576" YieldType="YIELD_FOOD" YieldChange="-1048576" />
+  </Building_YieldChanges>
+</GameData>

@@ -1,0 +1,11 @@
+<?xml version='1.0' encoding='utf-8'?>
+<GameData>
+  <LocalizedText>
+    <Row Tag="LOC_BUILDING_FDT_FOOD_NAME" Language="en_US">
+      <Text>Food Trade</Text>
+    </Row>
+    <Row Tag="LOC_BUILDING_FDT_FOOD_DESCRIPTION" Language="en_US">
+      <Text>Food sent or received through Food Trade routes.</Text>
+    </Row>
+  </LocalizedText>
+</GameData>

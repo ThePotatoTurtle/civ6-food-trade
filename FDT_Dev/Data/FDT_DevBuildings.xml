@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<GameData>
+  <Types>
+    <Row Type="BUILDING_FDT_DEV_FOOD_P_1" Kind="KIND_BUILDING"/>
+    <Row Type="BUILDING_FDT_DEV_FOOD_P_2" Kind="KIND_BUILDING"/>
+    <Row Type="BUILDING_FDT_DEV_FOOD_P_4" Kind="KIND_BUILDING"/>
+    <Row Type="BUILDING_FDT_DEV_FOOD_P_8" Kind="KIND_BUILDING"/>
+    <Row Type="BUILDING_FDT_DEV_FOOD_P_16" Kind="KIND_BUILDING"/>
+    <Row Type="BUILDING_FDT_DEV_FOOD_P_32" Kind="KIND_BUILDING"/>
+    <Row Type="BUILDING_FDT_DEV_FOOD_N_1" Kind="KIND_BUILDING"/>
+    <Row Type="BUILDING_FDT_DEV_FOOD_N_2" Kind="KIND_BUILDING"/>
+    <Row Type="BUILDING_FDT_DEV_FOOD_N_4" Kind="KIND_BUILDING"/>
+    <Row Type="BUILDING_FDT_DEV_FOOD_N_8" Kind="KIND_BUILDING"/>
+    <Row Type="BUILDING_FDT_DEV_FOOD_N_16" Kind="KIND_BUILDING"/>
+    <Row Type="BUILDING_FDT_DEV_FOOD_N_32" Kind="KIND_BUILDING"/>
+  </Types>
+  <Buildings>
+    <Row BuildingType="BUILDING_FDT_DEV_FOOD_P_1" Name="LOC_FDT_DEV_CALIBRATION" Cost="1" PrereqDistrict="DISTRICT_CITY_CENTER" InternalOnly="true"/>
+    <Row BuildingType="BUILDING_FDT_DEV_FOOD_P_2" Name="LOC_FDT_DEV_CALIBRATION" Cost="1" PrereqDistrict="DISTRICT_CITY_CENTER" InternalOnly="true"/>
+    <Row BuildingType="BUILDING_FDT_DEV_FOOD_P_4" Name="LOC_FDT_DEV_CALIBRATION" Cost="1" PrereqDistrict="DISTRICT_CITY_CENTER" InternalOnly="true"/>
+    <Row BuildingType="BUILDING_FDT_DEV_FOOD_P_8" Name="LOC_FDT_DEV_CALIBRATION" Cost="1" PrereqDistrict="DISTRICT_CITY_CENTER" InternalOnly="true"/>
+    <Row BuildingType="BUILDING_FDT_DEV_FOOD_P_16" Name="LOC_FDT_DEV_CALIBRATION" Cost="1" PrereqDistrict="DISTRICT_CITY_CENTER" InternalOnly="true"/>
+    <Row BuildingType="BUILDING_FDT_DEV_FOOD_P_32" Name="LOC_FDT_DEV_CALIBRATION" Cost="1" PrereqDistrict="DISTRICT_CITY_CENTER" InternalOnly="true"/>
+    <Row BuildingType="BUILDING_FDT_DEV_FOOD_N_1" Name="LOC_FDT_DEV_CALIBRATION" Cost="1" PrereqDistrict="DISTRICT_CITY_CENTER" InternalOnly="true"/>
+    <Row BuildingType="BUILDING_FDT_DEV_FOOD_N_2" Name="LOC_FDT_DEV_CALIBRATION" Cost="1" PrereqDistrict="DISTRICT_CITY_CENTER" InternalOnly="true"/>
+    <Row BuildingType="BUILDING_FDT_DEV_FOOD_N_4" Name="LOC_FDT_DEV_CALIBRATION" Cost="1" PrereqDistrict="DISTRICT_CITY_CENTER" InternalOnly="true"/>
+    <Row BuildingType="BUILDING_FDT_DEV_FOOD_N_8" Name="LOC_FDT_DEV_CALIBRATION" Cost="1" PrereqDistrict="DISTRICT_CITY_CENTER" InternalOnly="true"/>
+    <Row BuildingType="BUILDING_FDT_DEV_FOOD_N_16" Name="LOC_FDT_DEV_CALIBRATION" Cost="1" PrereqDistrict="DISTRICT_CITY_CENTER" InternalOnly="true"/>
+    <Row BuildingType="BUILDING_FDT_DEV_FOOD_N_32" Name="LOC_FDT_DEV_CALIBRATION" Cost="1" PrereqDistrict="DISTRICT_CITY_CENTER" InternalOnly="true"/>
+  </Buildings>
+  <Building_YieldChanges>
+    <Row BuildingType="BUILDING_FDT_DEV_FOOD_P_1" YieldType="YIELD_FOOD" YieldChange="1"/>
+    <Row BuildingType="BUILDING_FDT_DEV_FOOD_P_2" YieldType="YIELD_FOOD" YieldChange="2"/>
+    <Row BuildingType="BUILDING_FDT_DEV_FOOD_P_4" YieldType="YIELD_FOOD" YieldChange="4"/>
+    <Row BuildingType="BUILDING_FDT_DEV_FOOD_P_8" YieldType="YIELD_FOOD" YieldChange="8"/>
+    <Row BuildingType="BUILDING_FDT_DEV_FOOD_P_16" YieldType="YIELD_FOOD" YieldChange="16"/>
+    <Row BuildingType="BUILDING_FDT_DEV_FOOD_P_32" YieldType="YIELD_FOOD" YieldChange="32"/>
+    <Row BuildingType="BUILDING_FDT_DEV_FOOD_N_1" YieldType="YIELD_FOOD" YieldChange="-1"/>
+    <Row BuildingType="BUILDING_FDT_DEV_FOOD_N_2" YieldType="YIELD_FOOD" YieldChange="-2"/>
+    <Row BuildingType="BUILDING_FDT_DEV_FOOD_N_4" YieldType="YIELD_FOOD" YieldChange="-4"/>
+    <Row BuildingType="BUILDING_FDT_DEV_FOOD_N_8" YieldType="YIELD_FOOD" YieldChange="-8"/>
+    <Row BuildingType="BUILDING_FDT_DEV_FOOD_N_16" YieldType="YIELD_FOOD" YieldChange="-16"/>
+    <Row BuildingType="BUILDING_FDT_DEV_FOOD_N_32" YieldType="YIELD_FOOD" YieldChange="-32"/>
+  </Building_YieldChanges>
+</GameData>

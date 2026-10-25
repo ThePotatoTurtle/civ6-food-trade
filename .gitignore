@@ -1,0 +1,34 @@
+# Internal project planning and research
+Food_Trade_spec.md
+CIV6_MODDING_PLAYBOOK.md
+PLAN.md
+SPIKES.md
+DECISIONS.md
+FUTURE.md
+FIXPLAN_*
+INTERFACES.md
+TESTING_*
+research/
+spike/
+.claude/
+.agents/
+.codex/
+
+# Draft publishing materials and generated packages
+workshop/
+dist/
+
+# Generated game database extracts and local configuration
+*.sqlite
+*.sqlite3
+*.db
+*.log
+tools/local_config.json
+
+# Python and editor output
+__pycache__/
+*.py[cod]
+.venv/
+.vscode/
+Thumbs.db
+.DS_Store

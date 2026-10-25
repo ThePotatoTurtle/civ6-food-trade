@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Mod id="d924452c-f0a0-4a16-a654-6bdf5fd12856" version="1">
+  <Properties>
+    <Name>Food Trade</Name>
+    <Teaser>Send food between your own cities for a small gold cost.</Teaser>
+    <Description>Version 0.1.0.[NEWLINE][NEWLINE]Send food between your own cities. Pick a sender, a receiver and an amount in the Food Trade panel.[NEWLINE][NEWLINE]- Feature: routes need no trader, road or other connection.[NEWLINE]- Feature: routes shrink when food runs short and recover automatically.[NEWLINE]- Feature: older routes get food first, and received food can't be sent on again.[NEWLINE]- Feature: routes pause when you can't afford their gold cost.[NEWLINE]- Feature: notifications tell you when routes change or end.[NEWLINE][NEWLINE]Requires Gathering Storm. In-game and multiplayer testing is pending.[NEWLINE][NEWLINE]Known limitations: Only human players can create routes. Routes can only connect cities you own.[NEWLINE][NEWLINE]Author: ThePotatoTurtle</Description>
+    <Authors>ThePotatoTurtle</Authors>
+    <AffectsSavedGames>1</AffectsSavedGames>
+    <CompatibleVersions>2.0</CompatibleVersions>
+  </Properties>
+  <Dependencies>
+    <Mod id="4873eb62-8ccc-4574-b784-dda455e74e68" title="Gathering Storm" />
+  </Dependencies>
+  <InGameActions>
+    <UpdateDatabase id="FDT_Data">
+      <Properties><LoadOrder>1000</LoadOrder></Properties>
+      <File>Data/FDT_Buildings.xml</File>
+    </UpdateDatabase>
+    <UpdateText id="FDT_Text">
+      <File>Text/FDT_Text.xml</File>
+    </UpdateText>
+    <AddGameplayScripts id="FDT_Gameplay">
+      <File>Gameplay/FDT_Gameplay.lua</File>
+    </AddGameplayScripts>
+    <AddUserInterfaces id="FDT_Interface">
+      <Properties><Context>InGame</Context></Properties>
+      <File>UI/FDT_Panel.xml</File>
+    </AddUserInterfaces>
+    <ImportFiles id="FDT_Imports">
+      <File>Gameplay/FDT_Core.lua</File>
+      <File>UI/FDT_Panel.lua</File>
+    </ImportFiles>
+  </InGameActions>
+  <LocalizedText>
+    <Text id="Name"><en_US>Food Trade</en_US></Text>
+    <Text id="Teaser"><en_US>Send food between your own cities for a small gold cost.</en_US></Text>
+    <Text id="Description"><en_US>Version 0.1.0.[NEWLINE][NEWLINE]Send food between your own cities. Pick a sender, a receiver and an amount in the Food Trade panel.[NEWLINE][NEWLINE]- Feature: routes need no trader, road or other connection.[NEWLINE]- Feature: routes shrink when food runs short and recover automatically.[NEWLINE]- Feature: older routes get food first, and received food can't be sent on again.[NEWLINE]- Feature: routes pause when you can't afford their gold cost.[NEWLINE]- Feature: notifications tell you when routes change or end.[NEWLINE][NEWLINE]Requires Gathering Storm. In-game and multiplayer testing is pending.[NEWLINE][NEWLINE]Known limitations: Only human players can create routes. Routes can only connect cities you own.[NEWLINE][NEWLINE]Author: ThePotatoTurtle</en_US></Text>
+  </LocalizedText>
+  <Files>
+    <File>Data/FDT_Buildings.xml</File>
+    <File>Gameplay/FDT_Core.lua</File>
+    <File>Gameplay/FDT_Gameplay.lua</File>
+    <File>Text/FDT_Text.xml</File>
+    <File>UI/FDT_Panel.xml</File>
+    <File>UI/FDT_Panel.lua</File>
+  </Files>
+</Mod>

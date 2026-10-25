@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Mod id="ef1d45ad-2e88-49b3-9816-d09074f452f2" version="1">
+  <Properties>
+    <Name>Food Trade Development Tools</Name>
+    <Teaser>Development scenarios and in-game checks for Food Trade.</Teaser>
+    <Description>Version 0.1.0.1. Development tools for Food Trade 0.1.0. Start a new game with both mods enabled. In-game and multiplayer validation is pending.</Description>
+    <Authors>ThePotatoTurtle</Authors>
+    <AffectsSavedGames>1</AffectsSavedGames>
+    <CompatibleVersions>2.0</CompatibleVersions>
+  </Properties>
+  <Dependencies>
+    <Mod id="d924452c-f0a0-4a16-a654-6bdf5fd12856" title="Food Trade" />
+  </Dependencies>
+  <InGameActions>
+    <UpdateDatabase id="FDT_DevData"><Properties><LoadOrder>1100</LoadOrder></Properties><File>Data/FDT_DevBuildings.xml</File></UpdateDatabase>
+    <UpdateText id="FDT_DevText"><File>Text/FDT_DevText.xml</File></UpdateText>
+    <AddGameplayScripts id="FDT_DevGameplay">
+      <Properties><LoadOrder>1100</LoadOrder></Properties>
+      <File>Gameplay/FDT_Dev.lua</File>
+    </AddGameplayScripts>
+    <AddUserInterfaces id="FDT_DevInterface">
+      <Properties><Context>InGame</Context></Properties>
+      <File>UI/FDT_DevPanel.xml</File>
+    </AddUserInterfaces>
+    <ImportFiles id="FDT_DevImports"><File>UI/FDT_DevPanel.lua</File></ImportFiles>
+  </InGameActions>
+  <Files>
+    <File>Data/FDT_DevBuildings.xml</File>
+    <File>Text/FDT_DevText.xml</File>
+    <File>Gameplay/FDT_Dev.lua</File>
+    <File>UI/FDT_DevPanel.xml</File>
+    <File>UI/FDT_DevPanel.lua</File>
+  </Files>
+</Mod>

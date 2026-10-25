@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Context Name="FDT_Panel">
+  <Container ID="Panel" Anchor="C,C" Size="740,640" Hidden="1" ConsumeMouse="1">
+    <Grid Anchor="C,C" Size="740,640" Style="WindowFrameTitle">
+      <Label Style="WindowHeader" Anchor="C,T" Offset="0,12" String="FOOD TRADE"/>
+      <Button ID="Close" Anchor="R,T" Style="CloseButtonLarge" Offset="-8,-5"/>
+      <Stack Anchor="L,T" Offset="22,50" StackGrowth="Bottom" StackPadding="6">
+        <Label Style="BodyTextDark16" Size="696,20" String="Your routes"/>
+        <ScrollPanel ID="RouteScroll" Size="696,150" Vertical="1" AutoScrollBar="1">
+          <Stack ID="Routes" StackGrowth="Bottom" StackPadding="5"/>
+          <ScrollBar Anchor="R,T" Style="Slider_Light" Size="11,parent"/>
+        </ScrollPanel>
+        <Label ID="EditorTitle" Style="BodyTextDark16" Size="696,20" String="New route"/>
+        <Container Size="696,35">
+          <Label Anchor="L,C" Style="BodyTextDark14" String="Sender"/>
+          <PullDown ID="Sender" Anchor="R,C" Style="PullDownBlue" Size="530,28"/>
+        </Container>
+        <Container Size="696,35">
+          <Label Anchor="L,C" Style="BodyTextDark14" String="Receiver"/>
+          <PullDown ID="Receiver" Anchor="R,C" Style="PullDownBlue" Size="530,28"/>
+        </Container>
+        <Container Size="696,28">
+          <Label ID="Amount" Anchor="L,C" Style="BodyTextDark14"/>
+          <Slider ID="AmountSlider" Anchor="R,C" Style="SliderControl" Size="440,13"/>
+        </Container>
+        <Container Size="696,52"><Label ID="Confirmation" Size="690,52" Style="BodyTextDark14" WrapWidth="690"/></Container>
+        <Container Size="696,42">
+          <GridButton ID="New" Anchor="L,C" Size="190,38" Style="MainButton" String="New route"/>
+          <GridButton ID="Confirm" Anchor="R,C" Size="230,38" Style="MainButton" String="Confirm route"/>
+        </Container>
+        <Label ID="Feedback" Size="690,20" Style="BodyTextDark14" TruncateWidth="690"/>
+      </Stack>
+    </Grid>
+  </Container>
+  <Instance Name="FDT_CityEntry"><GridButton ID="Button" Size="530,28" Style="ButtonControl" FontStyle="glow" ColorSet="BlueGlow"/></Instance>
+  <Instance Name="FDT_RouteRow">
+    <Container ID="Root" Size="675,70">
+      <Label ID="Description" Anchor="L,T" Style="BodyTextDark14" WrapWidth="478"/>
+      <GridButton ID="Edit" Anchor="R,T" Offset="90,2" Size="82,32" Style="MainButton" String="Edit"/>
+      <GridButton ID="Cancel" Anchor="R,T" Offset="0,2" Size="82,32" Style="MainButton" String="Cancel"/>
+    </Container>
+  </Instance>
+  <Instance Name="FDT_LaunchButton">
+    <Button ID="Button" Anchor="L,C" Size="49,49" Texture="LaunchBar_Hook_GreatPeopleButton" Style="ButtonNormalText" TextureOffset="0,-1" StateOffsetIncrement="0,49" ToolTip="Food Trade">
+      <Label Anchor="C,C" Style="FontNormal10" Color="255,230,160,255" String="FOOD"/>
+    </Button>
+  </Instance>
+  <Instance Name="FDT_CityShortcut">
+    <Button ID="Button" Size="44,53" Texture="UnitPanel_ActionButton" ToolTip="Food Trade: send food from this city">
+      <Label Anchor="C,C" Style="FontNormal10" String="FOOD"/>
+    </Button>
+  </Instance>
+</Context>
