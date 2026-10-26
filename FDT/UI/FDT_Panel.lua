@@ -1,10 +1,16 @@
 -- Read-only UI. All mutations travel through the synchronized player operation.
 -- API evidence: research/UI_APIS.md. No base UI replacement is installed.
 include("InstanceManager")
+include("FDT_Distance")
+local Distance = FDT_Distance
 local rowManager = InstanceManager:new("FDT_RouteRow", "Root", Controls.Routes)
 local senderID, receiverID, editingID, amount = nil, nil, nil, 1
 local launch, shortcut = nil, nil
 local updatingSlider = false
+local distanceCache = Distance.newCache()
+local distanceAdapter = nil
+local selectionQuote = nil
+local foodSnapshots = {}
 local refresh, refreshEditor
 local function feedback(message)
   Controls.Feedback:SetText(message)
@@ -22,9 +28,10 @@ local function name(id)
   local c = city(id)
   return c and Locale.Lookup(c:GetName()) or "Lost city"
 end
-local function available(id)
+local function ownFood(id)
   local c = city(id)
   if not c then return 0 end
+  if foodSnapshots[id] ~= nil then return foodSnapshots[id] end
   local surplus = c:GetGrowth():GetFoodSurplus()
   local net = 0
   for i = 0, 20 do
@@ -34,9 +41,78 @@ local function available(id)
       if building and c:GetBuildings():HasBuilding(building.Index) then net = net + (sign == "P" and power or -power) end
     end
   end
-  return math.max(0, math.floor(surplus - net))
+  foodSnapshots[id] = surplus - net
+  return foodSnapshots[id]
 end
-local function cost(flow) return 1 + math.ceil(flow / 4) end
+local function available(id) return math.max(0, math.floor(ownFood(id))) end
+local function matchingRouteCity(id, x, y)
+  local current = city(id)
+  return current and current:GetX() == x and current:GetY() == y
+end
+local function projectFood()
+  local ordered, remaining = {}, {}
+  local turn = Game.GetCurrentGameTurn() + 1
+  for _, route in ipairs(state().routes or {}) do
+    if route.owner == Game.GetLocalPlayer() and route.startTurn <= turn and matchingRouteCity(route.senderCity, route.senderX, route.senderY) and matchingRouteCity(route.receiverCity, route.receiverX, route.receiverY) then ordered[#ordered + 1] = route end
+  end
+  table.sort(ordered, function(a,b)
+    local ac, bc = a.createdTurn or 0, b.createdTurn or 0
+    if ac ~= bc then return ac < bc end
+    return a.id < b.id
+  end)
+  local outgoing, incoming, projected = 0, 0, 0
+  for _, route in ipairs(ordered) do
+    local requested = route.amount
+    if route.pendingAmount ~= nil and (route.pendingTurn or turn) <= turn then requested = route.pendingAmount end
+    if route.id == editingID then requested = amount end
+    if remaining[route.senderCity] == nil then remaining[route.senderCity] = available(route.senderCity) end
+    local flow = math.min(requested, remaining[route.senderCity])
+    remaining[route.senderCity] = remaining[route.senderCity] - flow
+    if route.senderCity == senderID then outgoing = outgoing + flow end
+    if route.receiverCity == senderID then incoming = incoming + flow end
+    if route.id == editingID then projected = flow end
+  end
+  if not editingID and senderID and receiverID and senderID ~= receiverID then
+    projected = math.min(amount, remaining[senderID] or available(senderID))
+    outgoing = outgoing + projected
+  end
+  return projected, ownFood(senderID) + incoming - outgoing
+end
+local function cost(flow, distanceUnits)
+  return 1 + math.floor((flow * math.max(20, distanceUnits) + 79) / 80)
+end
+local function mapAdapter()
+  local width, height = Map.GetGridSize()
+  return {
+    count = width * height,
+    neighbors = function(index)
+      local plot, result = Map.GetPlotByIndex(index), {}
+      for direction = 0, 5 do
+        local neighbor = Map.GetAdjacentPlot(plot:GetX(), plot:GetY(), direction)
+        if neighbor then result[#result + 1] = neighbor:GetIndex() end
+      end
+      return result
+    end,
+    isWater = function(index) return Map.GetPlotByIndex(index):IsWater() end
+  }
+end
+local function quoteSelection()
+  local sender, receiver = city(senderID), city(receiverID)
+  if not sender or not receiver or senderID == receiverID then return nil end
+  if selectionQuote and selectionQuote.sender == senderID and selectionQuote.receiver == receiverID then
+    return selectionQuote.units, selectionQuote.error
+  end
+  local from = Map.GetPlot(sender:GetX(), sender:GetY())
+  local to = Map.GetPlot(receiver:GetX(), receiver:GetY())
+  distanceAdapter = distanceAdapter or mapAdapter()
+  local units, errorMessage = Distance.quote(from:GetIndex(), to:GetIndex(), distanceAdapter, distanceCache)
+  selectionQuote = {sender = senderID, receiver = receiverID, units = units, error = errorMessage}
+  return units, errorMessage
+end
+local function invalidateQuotes()
+  distanceCache, distanceAdapter, selectionQuote = Distance.newCache(), nil, nil
+  foodSnapshots = {}
+end
 local function request(handler, params)
   local playerID = Game.GetLocalPlayer()
   if playerID < 0 then return end
@@ -69,12 +145,16 @@ refreshEditor = function()
   Controls.Amount:SetText(string.format("Food per turn: %d / %d", amount, cap))
   Controls.EditorTitle:SetText(editingID and "Edit route (0 ends it)" or "New route")
   local valid = senderID and receiverID and senderID ~= receiverID and (amount >= 1 or editingID)
+  local distanceUnits, quoteError = quoteSelection()
+  valid = valid and (distanceUnits ~= nil or (editingID and amount == 0))
   Controls.Confirm:SetDisabled(not valid)
   Controls.Confirm:SetText(editingID and "Confirm changes" or "Confirm route")
   local before = city(senderID) and city(senderID):GetGrowth():GetFoodSurplus() or 0
-  local previous = 0
-  for _, r in ipairs(state().routes or {}) do if r.id == editingID then previous = r.flow end end
-  Controls.Confirmation:SetText(string.format("Sender surplus: %.1f before, %.1f after. Own surplus cap: %d. Planned cost: %d gold/turn. Starts next turn; older routes receive food first.", before, before + previous - amount, cap, amount == 0 and 0 or cost(amount)))
+  local projectedFlow, after = projectFood()
+  local detail = distanceUnits and string.format("Effective distance %.1f; maximum cost %d gold/turn.", distanceUnits / 2, amount == 0 and 0 or cost(amount, distanceUnits)) or (quoteError and ("Distance unavailable: " .. quoteError) or "Choose two cities for a quote.")
+  local confirmation = string.format("Sender surplus: %.1f before, %.1f projected after. Flow: %d of %d before gold limits.[NEWLINE]%s Starts next turn; oldest routes fill first.", before, after, projectedFlow, amount, detail)
+  Controls.Confirmation:SetText(confirmation)
+  Controls.Confirmation:SetToolTipString(confirmation .. "[NEWLINE]Own surplus cap: " .. cap .. ". Projection uses current city food and next-turn route requests. Gold shortages can reduce flow.")
 end
 local function pickSender(id) senderID = id; Controls.Sender:GetButton():SetText(name(id)); refreshEditor() end
 local function pickReceiver(id) receiverID = id; Controls.Receiver:GetButton():SetText(name(id)); refreshEditor() end
@@ -89,6 +169,11 @@ local function reset()
   refreshEditor()
 end
 refresh = function()
+  if editingID then
+    local exists = false
+    for _, route in ipairs(state().routes or {}) do if route.id == editingID and route.owner == Game.GetLocalPlayer() then exists = true; break end end
+    if not exists then reset() end
+  end
   rowManager:ResetInstances()
   local count = 0
   for _, r in ipairs(state().routes or {}) do
@@ -99,7 +184,9 @@ refresh = function()
       local pending = route.startTurn > Game.GetCurrentGameTurn()
       local status = route.switchedOff and "Switched off" or (pending and "Pending" or (route.flow < route.amount and "Reduced" or "Active"))
       if route.pendingAmount ~= nil then status = status .. " (edit to " .. route.pendingAmount .. " next turn)" end
-      row.Description:SetText(string.format("%s → %s[NEWLINE]Set %d | Flow %d | %s | %d gold/turn", name(route.senderCity), name(route.receiverCity), route.amount, route.flow, status, (pending or route.switchedOff) and 0 or cost(route.flow)))
+      local units = route.distanceUnits
+      local price = (pending or route.switchedOff) and 0 or (units and cost(route.flow, units) or nil)
+      row.Description:SetText(string.format("%s → %s[NEWLINE]Set %d | Flow %d | %s | %s gold/turn[NEWLINE]Effective distance: %s (sea steps count half)", name(route.senderCity), name(route.receiverCity), route.amount, route.flow, status, price and tostring(price) or "?", units and string.format("%.1f", units / 2) or "pending quote"))
       row.Edit:RegisterCallback(Mouse.eLClick, function()
         editingID, senderID, receiverID, amount = route.id, route.senderCity, route.receiverCity, route.pendingAmount or route.amount
         populate(Controls.Sender, senderID, pickSender); populate(Controls.Receiver, receiverID, pickReceiver)
@@ -169,6 +256,7 @@ local function foodTooltip()
   food:SetToolTipString(base .. (#lines > 0 and marker .. table.concat(lines, "[NEWLINE]") or ""))
 end
 local function published()
+  invalidateQuotes()
   foodTooltip()
   if not Controls.Panel:IsHidden() then refresh() end
 end
@@ -182,6 +270,6 @@ end)
 Events.LoadGameViewStateDone.Add(attach)
 Events.GameCoreEventPublishComplete.Add(published)
 Events.CitySelectionChanged.Add(foodTooltip)
-Events.LocalPlayerChanged.Add(function() Controls.Panel:SetHide(true); senderID, receiverID, editingID = nil, nil, nil end)
+Events.LocalPlayerChanged.Add(function() Controls.Panel:SetHide(true); senderID, receiverID, editingID = nil, nil, nil; invalidateQuotes() end)
 ContextPtr:SetHide(false)
 attach()

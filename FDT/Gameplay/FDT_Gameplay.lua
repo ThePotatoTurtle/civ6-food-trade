@@ -1,18 +1,49 @@
--- Engine signatures and remaining runtime checks: research/ENGINE_APIS.md.
+-- Engine signatures and remaining runtime checks: research/ENGINE_APIS.md
+-- and research/DISTANCE_APIS.md.
 include("FDT_Core")
+include("FDT_Distance")
 FDT = {}
 local M,Core = FDT,FDT_Core
 local STATE_KEY = "FDT_State"
 local EPSILON = 0.001
 local function currentTurn() return Game.GetCurrentGameTurn() end
 function M.GetState()
-  return Game:GetProperty(STATE_KEY) or {schemaVersion=1,nextRouteID=1,routes={},applied={},notices={},lastProcessedTurn=-1}
+  return Game:GetProperty(STATE_KEY) or {schemaVersion=2,nextRouteID=1,routes={},applied={},notices={},lastProcessedTurn=-1}
 end
 local function save(state) Game:SetProperty(STATE_KEY,state) end
 local function findCity(owner,id,x,y)
   local city = CityManager.GetCity(owner,id)
   if city and city:GetOwner()==owner and (x==nil or (city:GetX()==x and city:GetY()==y)) then return city end
   return nil
+end
+local function mapAdapter()
+  local width,height=Map.GetGridSize()
+  return {
+    count=width*height,
+    isWater=function(index)
+      local plot=Map.GetPlotByIndex(index)
+      return plot and plot:IsWater()
+    end,
+    neighbors=function(index)
+      local plot=Map.GetPlotByIndex(index)
+      if not plot then return nil end
+      local result={}
+      for direction=0,DirectionTypes.NUM_DIRECTION_TYPES-1 do
+        local adjacent=Map.GetAdjacentPlot(plot:GetX(),plot:GetY(),direction)
+        if adjacent then result[#result+1]=adjacent:GetIndex() end
+      end
+      return result
+    end
+  }
+end
+local function measure(sender,receiver,adapter,cache)
+  local a=Map.GetPlot(sender:GetX(),sender:GetY())
+  local b=Map.GetPlot(receiver:GetX(),receiver:GetY())
+  if not a or not b then return nil,"A route city has no map tile." end
+  return FDT_Distance.quote(a:GetIndex(),b:GetIndex(),adapter,cache)
+end
+function M.MeasureDistance(sender,receiver)
+  return measure(sender,receiver,mapAdapter(),FDT_Distance.newCache())
 end
 function M.ReadSurplus(city) return city:GetGrowth():GetFoodSurplus() end
 local function integer(value)
@@ -185,11 +216,13 @@ function M.Create(playerID,params)
     if r.receiverPlayer==playerID and r.receiverCity==params.receiverCity then incoming=incoming+math.max(r.amount,r.pendingAmount or 0) end
   end
   if incoming>Core.MAX_FOOD then return reject(playerID,"The receiving city's aggregate exceeds the supported amount.") end
+  local called,distanceUnits,errorMessage=pcall(function() return M.MeasureDistance(sender,receiver) end)
+  if not called or distanceUnits==nil then return reject(playerID,"Food Trade could not measure the route: "..tostring(called and errorMessage or distanceUnits)) end
   local now=currentTurn()
   state.routes[#state.routes+1]={id=state.nextRouteID,owner=playerID,partner=playerID,senderPlayer=playerID,
     senderCity=sender:GetID(),receiverPlayer=playerID,receiverCity=receiver:GetID(),senderX=sender:GetX(),senderY=sender:GetY(),
     receiverX=receiver:GetX(),receiverY=receiver:GetY(),senderName=sender:GetName(),receiverName=receiver:GetName(),
-    amount=amount,flow=0,createdTurn=now,startTurn=now+1,zeroTurns=0,switchedOff=false,pending=true}
+    amount=amount,flow=0,createdTurn=now,startTurn=now+1,zeroTurns=0,switchedOff=false,pending=true,distanceUnits=distanceUnits}
   state.nextRouteID=state.nextRouteID+1
   notice(state,playerID,"Food Trade route created. It starts next turn."); save(state)
   return true
@@ -232,6 +265,7 @@ function M.ProcessTurn(turn)
   local state=M.GetState()
   if state.lastProcessedTurn>=turn then return false end
   local valid,lost,cities,owners={},{},{},{}
+  local adapter,cache=nil,FDT_Distance.newCache()
   for _,r in ipairs(state.routes) do
     local sender=findCity(r.senderPlayer,r.senderCity,r.senderX,r.senderY)
     local receiver=findCity(r.receiverPlayer,r.receiverCity,r.receiverX,r.receiverY)
@@ -253,6 +287,38 @@ function M.ProcessTurn(turn)
   end
   table.sort(owners)
   local allocated=Core.allocate(valid,cities,turn)
+  -- Refresh terrain every processing turn; all routes in this pass share one
+  -- ephemeral geometry/source cache. Old records are measured before any fee.
+  if #allocated>0 then
+    local called,errorMessage=pcall(function()
+      adapter=mapAdapter()
+      for i,r in ipairs(allocated) do
+        local sender=findCity(r.senderPlayer,r.senderCity,r.senderX,r.senderY)
+        local receiver=findCity(r.receiverPlayer,r.receiverCity,r.receiverX,r.receiverY)
+        local units,reason=measure(sender,receiver,adapter,cache)
+        if units==nil then error(reason) end
+        r.distanceUnits=units
+      end
+    end)
+    if not called then
+      state.lastError="Food Trade could not measure route distance: "..tostring(errorMessage)
+      print("[FDT] turn="..turn.." FAIL "..state.lastError)
+      save(state); return false
+    end
+  end
+  -- Diagnostics retain pre-allocation route inputs with this turn's distances.
+  for i,r in ipairs(valid) do
+    for _,measured in ipairs(allocated) do if measured.id==r.id then
+      local snapshot={}
+      for _,key in ipairs({"id","owner","partner","senderPlayer","senderCity","receiverPlayer","receiverCity","senderX","senderY",
+        "receiverX","receiverY","amount","flow","createdTurn","startTurn","zeroTurns","switchedOff","pending","pendingAmount","pendingTurn","senderName","receiverName"}) do
+        snapshot[key]=r[key]
+      end
+      snapshot.distanceUnits=measured.distanceUnits
+      valid[i]=snapshot
+      break
+    end end
+  end
   local routes,charges,balances={},{},{}
   for _,owner in ipairs(owners) do
     local owned={}
@@ -286,6 +352,7 @@ function M.ProcessTurn(turn)
       end
     end
   end
+  state.schemaVersion=2
   state.routes=kept; state.applied=ledger; state.lastProcessedTurn=turn; state.lastError=nil
   state.lastCharges=charges
   state.lastInputs={turn=turn,cities=cities,owners=balances,routes=valid}

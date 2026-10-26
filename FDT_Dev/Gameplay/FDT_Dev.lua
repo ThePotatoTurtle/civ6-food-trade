@@ -1,5 +1,8 @@
 -- Food Trade development scenario. Source evidence: research/UI_APIS.md and
 -- research/ENGINE_APIS.md. Separate gameplay context, synchronized requests only.
+include("FDT_Distance")
+local Distance = FDT_Distance
+local TARGET_VERSION = "0.2.0"
 local passes, failures, pending = 0, 0, 0
 local logOwner = -1
 local function log(tag, actual, expected, ok)
@@ -47,7 +50,39 @@ local function calibrate(c, target)
   return ownSurplus(c),delta
 end
 local function snapshot(r)
-  return {id=r.id,owner=r.owner,senderPlayer=r.senderPlayer,senderCity=r.senderCity,receiverPlayer=r.receiverPlayer,receiverCity=r.receiverCity,amount=r.pendingAmount or r.amount,createdTurn=r.createdTurn,startTurn=r.startTurn,zeroTurns=r.zeroTurns or 0}
+  return {id=r.id,owner=r.owner,senderPlayer=r.senderPlayer,senderCity=r.senderCity,receiverPlayer=r.receiverPlayer,receiverCity=r.receiverCity,amount=r.pendingAmount or r.amount,createdTurn=r.createdTurn,startTurn=r.startTurn,zeroTurns=r.zeroTurns or 0,distanceUnits=r.distanceUnits}
+end
+local function distanceSpikes(owner, s)
+  local function chain(water)
+    return {count=41,neighbors=function(index)
+      local result={};if index>0 then result[#result+1]=index-1 end;if index<40 then result[#result+1]=index+1 end;return result
+    end,isWater=function(index)return water and index>0 and index<40 end}
+  end
+  local land=Distance.quote(0,40,chain(false),Distance.newCache())
+  local sea=Distance.quote(0,40,chain(true),Distance.newCache())
+  log("SPIKE S6 land 40 steps",land,80,land==80)
+  log("SPIKE S6 sea 38 steps and 2 crossings",sea,46,sea==46)
+  local crossing=Distance.quote(0,1,{count=2,neighbors=function(index)return {1-index} end,isWater=function(index)return index==1 end},Distance.newCache())
+  log("SPIKE S6 single crossing total",crossing,4,crossing==4)
+  if land and sea then
+    local landFee=1+math.floor((5*math.max(20,land)+79)/80)
+    local seaFee=1+math.floor((5*math.max(20,sea)+79)/80)
+    log("SPIKE S6 land fee flow=5",landFee,6,landFee==6)
+    log("SPIKE S6 sea fee flow=5",seaFee,4,seaFee==4)
+  end
+  local width,height=Map.GetGridSize()
+  local adapter={count=width*height,neighbors=function(index)
+    local p,result=Map.GetPlotByIndex(index),{}
+    for direction=0,5 do local neighbor=Map.GetAdjacentPlot(p:GetX(),p:GetY(),direction);if neighbor then result[#result+1]=neighbor:GetIndex() end end
+    return result
+  end,isWater=function(index)return Map.GetPlotByIndex(index):IsWater() end}
+  local sender,receiver=city(owner,s.cities[1]),city(owner,s.cities[2])
+  local from=Map.GetPlot(sender:GetX(),sender:GetY()):GetIndex()
+  local to=Map.GetPlot(receiver:GetX(),receiver:GetY()):GetIndex()
+  local cache=Distance.newCache()
+  local forward=Distance.quote(from,to,adapter,cache)
+  local reverse=Distance.quote(to,from,adapter,cache)
+  log("SPIKE S6 map symmetric city="..sender:GetID().."->"..receiver:GetID(),forward,reverse,forward~=nil and forward>0 and forward==reverse)
 end
 local function saveExpectations(s)
   local current = Game:GetProperty("FDT_State") or {routes={}}
@@ -137,6 +172,7 @@ local function spikes(owner)
   log("SPIKE S4 missing city",city(owner,2147483647)==nil,true,city(owner,2147483647)==nil)
   waitForLook("SPIKE S4 capture/flip/raze","Ownership resolver sourced; actual capture, loyalty flip and raze remain separate runtime cases")
   waitForLook("SPIKE S5","Food launch button and city shortcut should open the panel; verify city tooltip after creating a route")
+  distanceSpikes(owner,s)
   end)
   local foodOK,foodError=pcall(function() setBuildings(c,0,"BUILDING_FDT_FOOD_",21) end)
   local goldOK,goldError=pcall(function() treasury:ChangeGoldBalance(originalBalance-treasury:GetGoldBalance()) end)
@@ -197,7 +233,9 @@ local function checker(turn)
     if r.startTurn<=turn then
       local flow=math.min(r.amount,remaining[r.senderCity] or 0)
       remaining[r.senderCity]=(remaining[r.senderCity] or 0)-flow
-      expected[#expected+1]={id=r.id,flow=flow,cost=1+math.ceil(flow/4),off=false,zeroTurns=r.zeroTurns,amount=r.amount,senderCity=r.senderCity,receiverCity=r.receiverCity}
+      if type(r.distanceUnits)~="number" or r.distanceUnits<0 or r.distanceUnits~=math.floor(r.distanceUnits) then log("CHECK route="..r.id.." distance",r.distanceUnits,"whole nonnegative half-hex units",false); summary(); return end
+      local fee=1+math.floor((flow*math.max(20,r.distanceUnits)+79)/80)
+      expected[#expected+1]={id=r.id,flow=flow,cost=fee,off=false,zeroTurns=r.zeroTurns,amount=r.amount,senderCity=r.senderCity,receiverCity=r.receiverCity,distanceUnits=r.distanceUnits}
     end
   end
   local charge=0; for _, r in ipairs(expected) do charge=charge+r.cost end
@@ -209,8 +247,9 @@ local function checker(turn)
     if actual then
       log("CHECK route="..e.id.." amount",actual.amount,e.amount,actual.amount==e.amount)
       log("CHECK route="..e.id.." switchedOff",actual.switchedOff,e.off,actual.switchedOff==e.off)
+      log("CHECK route="..e.id.." distanceUnits",actual.distanceUnits,e.distanceUnits,actual.distanceUnits==e.distanceUnits)
       log("CHECK route="..e.id.." zeroTurns",actual.zeroTurns,e.flow==0 and e.zeroTurns+1 or 0,actual.zeroTurns==(e.flow==0 and e.zeroTurns+1 or 0))
-      print(string.format("[CHECK] route=%d amount=%d flow=%d switchedOff=%s charge=%d",actual.id,actual.amount,actual.flow,tostring(actual.switchedOff),e.cost))
+      print(string.format("[CHECK] route=%d amount=%d flow=%d effectiveDistance=%.1f switchedOff=%s charge=%d",actual.id,actual.amount,actual.flow,e.distanceUnits/2,tostring(actual.switchedOff),e.cost))
     end
   end
   for _, id in ipairs(s.cities) do
@@ -245,4 +284,4 @@ end
 GameEvents.FDT_Create.Add(routesChanged)
 GameEvents.FDT_Edit.Add(routesChanged)
 GameEvents.FDT_Cancel.Add(routesChanged)
-print("[FDT DEV] loaded; use DEV launch button, then Setup Food Scenario")
+print("[FDT DEV] target "..TARGET_VERSION.." loaded; use DEV launch button, then Setup Food Scenario")

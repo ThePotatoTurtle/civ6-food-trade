@@ -6,7 +6,7 @@
       <Button ID="Close" Anchor="R,T" Style="CloseButtonLarge" Offset="-8,-5"/>
       <Stack Anchor="L,T" Offset="22,50" StackGrowth="Bottom" StackPadding="6">
         <Label Style="BodyTextDark16" Size="696,20" String="Your routes"/>
-        <ScrollPanel ID="RouteScroll" Size="696,150" Vertical="1" AutoScrollBar="1">
+        <ScrollPanel ID="RouteScroll" Size="696,140" Vertical="1" AutoScrollBar="1">
           <Stack ID="Routes" StackGrowth="Bottom" StackPadding="5"/>
           <ScrollBar Anchor="R,T" Style="Slider_Light" Size="11,parent"/>
         </ScrollPanel>
@@ -24,6 +24,7 @@
           <Slider ID="AmountSlider" Anchor="R,C" Style="SliderControl" Size="440,13"/>
         </Container>
         <Container Size="696,52"><Label ID="Confirmation" Size="690,52" Style="BodyTextDark14" WrapWidth="690"/></Container>
+        <Container Size="696,32"><Label Size="690,32" Style="BodyTextDark14" WrapWidth="690" String="Cheapest map path: land 1, sea 0.5, land/sea crossing 2. Price uses at least 10 distance. No harbor or connection needed."/></Container>
         <Container Size="696,42">
           <GridButton ID="New" Anchor="L,C" Size="190,38" Style="MainButton" String="New route"/>
           <GridButton ID="Confirm" Anchor="R,C" Size="230,38" Style="MainButton" String="Confirm route"/>
@@ -34,7 +35,7 @@
   </Container>
   <Instance Name="FDT_CityEntry"><GridButton ID="Button" Size="530,28" Style="ButtonControl" FontStyle="glow" ColorSet="BlueGlow"/></Instance>
   <Instance Name="FDT_RouteRow">
-    <Container ID="Root" Size="675,70">
+    <Container ID="Root" Size="675,88">
       <Label ID="Description" Anchor="L,T" Style="BodyTextDark14" WrapWidth="478"/>
       <GridButton ID="Edit" Anchor="R,T" Offset="90,2" Size="82,32" Style="MainButton" String="Edit"/>
       <GridButton ID="Cancel" Anchor="R,T" Offset="0,2" Size="82,32" Style="MainButton" String="Cancel"/>
