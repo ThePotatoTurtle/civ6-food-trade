@@ -13,6 +13,8 @@ spike/
 .claude/
 .agents/
 .codex/
+tests/
+tools/
 
 # Draft publishing materials and generated packages
 workshop/
