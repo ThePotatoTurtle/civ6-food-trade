@@ -81,6 +81,61 @@ end
 local function cost(flow, distanceUnits)
   return 1 + math.floor((flow * math.max(20, distanceUnits) + 79) / 80)
 end
+-- Native TopPanel creates anonymous yield instances. Discover gold by its raw
+-- icon, then reconcile only tooltip text; preserve native callbacks and GPT.
+-- Base/UI/TopPanel.xml:118-128 defines this subtree; GS TopPanel.lua:145 sets
+-- the gold icon. Its queued RefreshYields():148 replaces tooltip text, so our
+-- own SetUpdate observes that replacement without overriding native handlers.
+local goldControl, goldWritten, goldLine = nil, nil, nil
+local GOLD_MARKER = "[NEWLINE]Food Trade upkeep: "
+local function childNamed(parent, id)
+  for _, child in ipairs(parent:GetChildren()) do if child:GetID() == id then return child end end
+end
+local function findGoldControl()
+  local stack = ContextPtr:LookUpControl("/InGame/TopPanel/YieldStack")
+  if not stack then return nil end
+  for _, top in ipairs(stack:GetChildren()) do
+    local backing = childNamed(top, "YieldBacking")
+    local content = backing and childNamed(backing, "YieldButtonStack")
+    local icon = content and childNamed(content, "YieldIconString")
+    if icon and icon:GetText() == "[ICON_GoldLarge]" then return backing end
+  end
+end
+local function stripGoldLine(text)
+  local position = string.find(text, GOLD_MARKER, 1, true)
+  while position do
+    local following = string.find(text, "[NEWLINE]", position + #GOLD_MARKER, true)
+    text = string.sub(text, 1, position - 1) .. (following and string.sub(text, following) or "")
+    position = string.find(text, GOLD_MARKER, 1, true)
+  end
+  return text
+end
+local function reconcileGoldTooltip()
+  goldControl = goldControl or findGoldControl()
+  if not goldControl then return end
+  local current = goldControl:GetToolTipString()
+  if not current or current == "" or current == goldWritten then return end
+  local base = stripGoldLine(current)
+  local updated = base .. (goldLine and GOLD_MARKER .. goldLine or "")
+  if updated ~= current then goldControl:SetToolTipString(updated) end
+  goldWritten = updated
+end
+local function cacheGoldUpkeep(rediscover)
+  local owner, total, unknown = Game.GetLocalPlayer(), 0, false
+  if owner >= 0 then
+    for _, route in ipairs(state().routes or {}) do
+      if route.owner == owner and not route.switchedOff and route.startTurn <= Game.GetCurrentGameTurn() then
+        if route.flow == 0 then total = total + 1
+        elseif type(route.distanceUnits) == "number" and route.distanceUnits >= 0 then total = total + cost(route.flow, route.distanceUnits)
+        else unknown = true end
+      end
+    end
+    goldLine = unknown and "? gold/turn (distance pending)" or ((total > 0 and "-" or "") .. total .. " gold/turn")
+  else goldLine = nil end
+  goldWritten = nil
+  if rediscover then goldControl = nil end
+  reconcileGoldTooltip()
+end
 local function mapAdapter()
   local width, height = Map.GetGridSize()
   return {
@@ -257,6 +312,7 @@ local function foodTooltip()
 end
 local function published()
   invalidateQuotes()
+  cacheGoldUpkeep(false)
   foodTooltip()
   if not Controls.Panel:IsHidden() then refresh() end
 end
@@ -267,9 +323,12 @@ Controls.Confirm:RegisterCallback(Mouse.eLClick, function()
   if editingID then request("FDT_Edit", {routeID = editingID, amount = amount})
   else request("FDT_Create", {senderCity = senderID, receiverCity = receiverID, amount = amount}) end
 end)
-Events.LoadGameViewStateDone.Add(attach)
+Events.LoadGameViewStateDone.Add(function() attach(); cacheGoldUpkeep(true) end)
 Events.GameCoreEventPublishComplete.Add(published)
 Events.CitySelectionChanged.Add(foodTooltip)
-Events.LocalPlayerChanged.Add(function() Controls.Panel:SetHide(true); senderID, receiverID, editingID = nil, nil, nil; invalidateQuotes() end)
+Events.TreasuryChanged.Add(function() cacheGoldUpkeep(true) end)
+Events.LocalPlayerChanged.Add(function() Controls.Panel:SetHide(true); senderID, receiverID, editingID = nil, nil, nil; invalidateQuotes(); cacheGoldUpkeep(true) end)
 ContextPtr:SetHide(false)
+ContextPtr:SetUpdate(reconcileGoldTooltip)
 attach()
+cacheGoldUpkeep(true)

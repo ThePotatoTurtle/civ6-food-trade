@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<Mod id="ef1d45ad-2e88-49b3-9816-d09074f452f2" version="2">
+<Mod id="ef1d45ad-2e88-49b3-9816-d09074f452f2" version="3">
   <Properties>
     <Name>Food Trade Development Tools</Name>
     <Teaser>Development scenarios and in-game checks for Food Trade.</Teaser>
-    <Description>Version 0.2.0.1. Development tools for Food Trade 0.2.0. Start a new game with both mods enabled. In-game and multiplayer validation is pending.</Description>
+    <Description>Version 0.2.1.1. Development tools for Food Trade 0.2.1. Start a new game with both mods enabled. In-game and multiplayer validation is pending.</Description>
     <Authors>ThePotatoTurtle</Authors>
     <AffectsSavedGames>1</AffectsSavedGames>
     <CompatibleVersions>2.0</CompatibleVersions>

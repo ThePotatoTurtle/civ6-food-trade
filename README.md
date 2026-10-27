@@ -10,6 +10,8 @@ Each land-to-land step counts as 1 effective distance, each water-to-water step 
 
 A 5-food route costs 3 gold across 10 land hexes, 4 across 20 and 6 across 40. Water can lower the price. A route sending no food still costs 1 gold. If you can't pay, the newest routes switch off until you can afford them again.
 
+Food Trade upkeep is listed in the gold tooltip.
+
 Open Food Trade from the launch bar. Create a route, edit its amount or cancel it in the panel. A route ends if either city is lost or it sends no food for 10 turns in a row. You'll get a notification when a route is created, reduced, restored or ended, and when gold runs short.
 
 Requires Gathering Storm. AI players don't create routes. Single player and multiplayer are intended; in-game and multiplayer validation is still pending.

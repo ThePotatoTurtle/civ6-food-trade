@@ -2,7 +2,7 @@
 -- research/ENGINE_APIS.md. Separate gameplay context, synchronized requests only.
 include("FDT_Distance")
 local Distance = FDT_Distance
-local TARGET_VERSION = "0.2.0"
+local TARGET_VERSION = "0.2.1"
 local passes, failures, pending = 0, 0, 0
 local logOwner = -1
 local function log(tag, actual, expected, ok)
