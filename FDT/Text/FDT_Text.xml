@@ -2,10 +2,10 @@
 <GameData>
   <LocalizedText>
     <Row Tag="LOC_BUILDING_FDT_FOOD_NAME" Language="en_US">
-      <Text>Food Trade</Text>
+      <Text>Food Trading</Text>
     </Row>
     <Row Tag="LOC_BUILDING_FDT_FOOD_DESCRIPTION" Language="en_US">
-      <Text>Food sent or received through Food Trade routes.</Text>
+      <Text>Food sent or received through Food Trading routes.</Text>
     </Row>
   </LocalizedText>
 </GameData>

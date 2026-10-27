@@ -87,7 +87,10 @@ end
 -- the gold icon. Its queued RefreshYields():148 replaces tooltip text, so our
 -- own SetUpdate observes that replacement without overriding native handlers.
 local goldControl, goldWritten, goldLine = nil, nil, nil
-local GOLD_MARKER = "[NEWLINE]Food Trade upkeep: "
+local GOLD_MARKER = "[NEWLINE]Food Trading upkeep: "
+-- A context reload can retain the previous public name in native tooltip text.
+local PREVIOUS_PUBLIC_NAME = string.gsub("Food Trading", "ing$", "e")
+local GOLD_MARKERS = {GOLD_MARKER, "[NEWLINE]" .. PREVIOUS_PUBLIC_NAME .. " upkeep: "}
 local function childNamed(parent, id)
   for _, child in ipairs(parent:GetChildren()) do if child:GetID() == id then return child end end
 end
@@ -102,11 +105,13 @@ local function findGoldControl()
   end
 end
 local function stripGoldLine(text)
-  local position = string.find(text, GOLD_MARKER, 1, true)
-  while position do
-    local following = string.find(text, "[NEWLINE]", position + #GOLD_MARKER, true)
-    text = string.sub(text, 1, position - 1) .. (following and string.sub(text, following) or "")
-    position = string.find(text, GOLD_MARKER, 1, true)
+  for _, marker in ipairs(GOLD_MARKERS) do
+    local position = string.find(text, marker, 1, true)
+    while position do
+      local following = string.find(text, "[NEWLINE]", position + #marker, true)
+      text = string.sub(text, 1, position - 1) .. (following and string.sub(text, following) or "")
+      position = string.find(text, marker, 1, true)
+    end
   end
   return text
 end
@@ -258,7 +263,7 @@ refresh = function()
   end
   Controls.Routes:CalculateSize(); Controls.RouteScroll:CalculateInternalSize()
   local snapshot = state()
-  if snapshot.lastError then feedback("Food Trade could not update: " .. snapshot.lastError)
+  if snapshot.lastError then feedback("Food Trading could not update: " .. snapshot.lastError)
   else
     for i = #(snapshot.notices or {}), 1, -1 do
       local notice = snapshot.notices[i]
@@ -300,13 +305,15 @@ local function foodTooltip()
   local lines = {}
   for _, r in ipairs(state().routes or {}) do
     if r.owner == Game.GetLocalPlayer() and r.flow > 0 then
-      if r.senderCity == selected:GetID() then lines[#lines + 1] = string.format("Food Trade: -%d to %s", r.flow, name(r.receiverCity)) end
-      if r.receiverCity == selected:GetID() then lines[#lines + 1] = string.format("Food Trade: +%d from %s", r.flow, name(r.senderCity)) end
+      if r.senderCity == selected:GetID() then lines[#lines + 1] = string.format("Food Trading: -%d to %s", r.flow, name(r.receiverCity)) end
+      if r.receiverCity == selected:GetID() then lines[#lines + 1] = string.format("Food Trading: +%d from %s", r.flow, name(r.senderCity)) end
     end
   end
-  local marker = "[NEWLINE]Food Trade routes:[NEWLINE]"
+  local marker = "[NEWLINE]Food Trading routes:[NEWLINE]"
   local base = food:GetToolTipString() or selected:GetYieldToolTip(YieldTypes.FOOD)
   local position = string.find(base, marker, 1, true)
+  local previous = string.find(base, "[NEWLINE]" .. PREVIOUS_PUBLIC_NAME .. " routes:[NEWLINE]", 1, true)
+  if previous and (not position or previous < position) then position = previous end
   if position then base = string.sub(base, 1, position - 1) end
   food:SetToolTipString(base .. (#lines > 0 and marker .. table.concat(lines, "[NEWLINE]") or ""))
 end

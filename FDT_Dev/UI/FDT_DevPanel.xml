@@ -2,7 +2,7 @@
 <Context Name="FDT_DevPanel">
   <Container ID="Panel" Anchor="C,C" Size="550,440" Hidden="1" ConsumeMouse="1">
     <Grid Anchor="C,C" Size="550,440" Style="WindowFrameTitle">
-      <Label Style="WindowHeader" Anchor="C,T" Offset="0,12" String="FOOD TRADE DEVELOPMENT"/>
+      <Label Style="WindowHeader" Anchor="C,T" Offset="0,12" String="FOOD TRADING DEVELOPMENT"/>
       <Button ID="Close" Anchor="R,T" Style="CloseButtonLarge" Offset="-8,-5"/>
       <Stack Anchor="L,T" Offset="24,55" StackGrowth="Bottom" StackPadding="12">
         <Label Style="BodyTextDark14" WrapWidth="500" String="Use a new game. Setup creates three test cities. Results are written to Lua.log."/>
@@ -16,7 +16,7 @@
     </Grid>
   </Container>
   <Instance Name="FDT_DevLaunch">
-    <Button ID="Button" Anchor="L,C" Size="49,49" Texture="LaunchBar_Hook_GreatPeopleButton" Style="ButtonNormalText" TextureOffset="0,-1" StateOffsetIncrement="0,49" ToolTip="Food Trade development tools">
+    <Button ID="Button" Anchor="L,C" Size="49,49" Texture="LaunchBar_Hook_GreatPeopleButton" Style="ButtonNormalText" TextureOffset="0,-1" StateOffsetIncrement="0,49" ToolTip="Food Trading development tools">
       <Label Anchor="C,C" Style="FontNormal10" Color="255,230,160,255" String="DEV"/>
     </Button>
   </Instance>

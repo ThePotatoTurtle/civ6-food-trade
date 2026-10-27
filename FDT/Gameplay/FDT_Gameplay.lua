@@ -72,12 +72,12 @@ function M.ReadAppliedFood(city)
 end
 function M.ApplyCityFood(city,delta)
   if not integer(delta) or math.abs(delta)>Core.MAX_FOOD then return false,"Food amount exceeds the supported aggregate." end
-  if not supported(city) then return false,"Food Trade building methods are unavailable; run S1." end
+  if not supported(city) then return false,"Food Trading building methods are unavailable; run S1." end
   -- Check every data row before changing the first building.
   for i=0,20 do
     local bit = 2^i
     for _,sign in ipairs({"P","N"}) do
-      if not GameInfo.Buildings[buildingName(sign,bit)] then return false,"Food Trade building data is missing." end
+      if not GameInfo.Buildings[buildingName(sign,bit)] then return false,"Food Trading building data is missing." end
     end
   end
   local buildings,queue = city:GetBuildings(),city:GetBuildQueue()
@@ -108,7 +108,7 @@ local function notice(state,owner,message)
   if NotificationManager and NotificationTypes and NotificationTypes.USER_DEFINED_1 then
     local data = {}
     data[ParameterTypes.MESSAGE]=message
-    data[ParameterTypes.SUMMARY]="Food Trade"
+    data[ParameterTypes.SUMMARY]="Food Trading"
     NotificationManager.SendNotification(owner,NotificationTypes.USER_DEFINED_1,data)
   end
 end
@@ -140,7 +140,7 @@ local function applyLedger(old,new)
     for _,entry in ipairs(list) do
       local city=CityManager.GetCityAt(entry.x,entry.y)
       if city and (not supported(city) or math.abs(entry.delta)>Core.MAX_FOOD) then
-        return false,"Food Trade effect adapter or amount is unsupported."
+        return false,"Food Trading effect adapter or amount is unsupported."
       end
     end
   end
@@ -190,7 +190,7 @@ local function removeRoute(state,index,reason)
   local ok,errorMessage=applyLedger(state.applied,ledger)
   if not ok then return reject(route.owner,errorMessage) end
   state.routes=proposed; state.applied=ledger
-  notice(state,route.owner,"Food Trade route ended: "..reason)
+  notice(state,route.owner,"Food Trading route ended: "..reason)
   save(state)
   return true
 end
@@ -217,14 +217,14 @@ function M.Create(playerID,params)
   end
   if incoming>Core.MAX_FOOD then return reject(playerID,"The receiving city's aggregate exceeds the supported amount.") end
   local called,distanceUnits,errorMessage=pcall(function() return M.MeasureDistance(sender,receiver) end)
-  if not called or distanceUnits==nil then return reject(playerID,"Food Trade could not measure the route: "..tostring(called and errorMessage or distanceUnits)) end
+  if not called or distanceUnits==nil then return reject(playerID,"Food Trading could not measure the route: "..tostring(called and errorMessage or distanceUnits)) end
   local now=currentTurn()
   state.routes[#state.routes+1]={id=state.nextRouteID,owner=playerID,partner=playerID,senderPlayer=playerID,
     senderCity=sender:GetID(),receiverPlayer=playerID,receiverCity=receiver:GetID(),senderX=sender:GetX(),senderY=sender:GetY(),
     receiverX=receiver:GetX(),receiverY=receiver:GetY(),senderName=sender:GetName(),receiverName=receiver:GetName(),
     amount=amount,flow=0,createdTurn=now,startTurn=now+1,zeroTurns=0,switchedOff=false,pending=true,distanceUnits=distanceUnits}
   state.nextRouteID=state.nextRouteID+1
-  notice(state,playerID,"Food Trade route created. It starts next turn."); save(state)
+  notice(state,playerID,"Food Trading route created. It starts next turn."); save(state)
   return true
 end
 function M.Cancel(playerID,params)
@@ -301,7 +301,7 @@ function M.ProcessTurn(turn)
       end
     end)
     if not called then
-      state.lastError="Food Trade could not measure route distance: "..tostring(errorMessage)
+      state.lastError="Food Trading could not measure route distance: "..tostring(errorMessage)
       print("[FDT] turn="..turn.." FAIL "..state.lastError)
       save(state); return false
     end
@@ -338,17 +338,17 @@ function M.ProcessTurn(turn)
     state.lastError=errorMessage; save(state); return false
   end
   for _,charge in ipairs(charges) do if charge.charge>0 then Players[charge.owner]:GetTreasury():ChangeGoldBalance(-charge.charge) end end
-  for _,r in ipairs(lost) do notice(state,r.owner,"Food Trade route ended: a city was lost.") end
-  for _,r in ipairs(expired) do notice(state,r.owner,"Food Trade route ended: 10 turns with no food flow.") end
+  for _,r in ipairs(lost) do notice(state,r.owner,"Food Trading route ended: a city was lost.") end
+  for _,r in ipairs(expired) do notice(state,r.owner,"Food Trading route ended: 10 turns with no food flow.") end
   for _,r in ipairs(kept) do
     local prior=nil
     for _,old in ipairs(state.routes) do if old.id==r.id then prior=old; break end end
     if not r.pending and prior then
-      if r.switchedOff and not prior.switchedOff then notice(state,r.owner,"Food Trade route switched off: not enough gold.")
+      if r.switchedOff and not prior.switchedOff then notice(state,r.owner,"Food Trading route switched off: not enough gold.")
       elseif not r.switchedOff then
         local wasReduced=not prior.pending and prior.flow<prior.amount and not prior.switchedOff
-        if r.flow<r.amount and not wasReduced then notice(state,r.owner,"Food Trade route reduced: "..r.flow.." of "..r.amount.." food.")
-        elseif r.flow==r.amount and (wasReduced or prior.switchedOff) then notice(state,r.owner,"Food Trade route restored.") end
+        if r.flow<r.amount and not wasReduced then notice(state,r.owner,"Food Trading route reduced: "..r.flow.." of "..r.amount.." food.")
+        elseif r.flow==r.amount and (wasReduced or prior.switchedOff) then notice(state,r.owner,"Food Trading route restored.") end
       end
     end
   end
@@ -364,4 +364,4 @@ GameEvents.FDT_Create.Add(M.Create)
 GameEvents.FDT_Edit.Add(M.Edit)
 GameEvents.FDT_Cancel.Add(M.Cancel)
 GameEvents.OnGameTurnStarted.Add(M.ProcessTurn)
-print("[FDT] Food Trade "..Core.VERSION.." loaded; S1-S5 runtime verification pending")
+print("[FDT] Food Trading "..Core.VERSION.." loaded; S1-S5 runtime verification pending")

@@ -1,7 +1,7 @@
 -- Pure deterministic route rules. This module also runs outside Civ VI.
 FDT_Core = {}
 local M = FDT_Core
-M.VERSION = "0.2.1"
+M.VERSION = "0.2.2"
 M.MAX_FOOD = 2097151
 local fields = {"id","owner","partner","senderPlayer","senderCity","receiverPlayer","receiverCity",
   "senderX","senderY","receiverX","receiverY","amount","flow","createdTurn","startTurn",

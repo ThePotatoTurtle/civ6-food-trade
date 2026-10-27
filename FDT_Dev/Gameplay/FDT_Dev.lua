@@ -1,8 +1,8 @@
--- Food Trade development scenario. Source evidence: research/UI_APIS.md and
+-- Food Trading development scenario. Source evidence: research/UI_APIS.md and
 -- research/ENGINE_APIS.md. Separate gameplay context, synchronized requests only.
 include("FDT_Distance")
 local Distance = FDT_Distance
-local TARGET_VERSION = "0.2.1"
+local TARGET_VERSION = "0.2.2"
 local passes, failures, pending = 0, 0, 0
 local logOwner = -1
 local function log(tag, actual, expected, ok)

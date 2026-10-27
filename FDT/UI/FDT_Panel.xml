@@ -2,7 +2,7 @@
 <Context Name="FDT_Panel">
   <Container ID="Panel" Anchor="C,C" Size="740,640" Hidden="1" ConsumeMouse="1">
     <Grid Anchor="C,C" Size="740,640" Style="WindowFrameTitle">
-      <Label Style="WindowHeader" Anchor="C,T" Offset="0,12" String="FOOD TRADE"/>
+      <Label Style="WindowHeader" Anchor="C,T" Offset="0,12" String="FOOD TRADING"/>
       <Button ID="Close" Anchor="R,T" Style="CloseButtonLarge" Offset="-8,-5"/>
       <Stack Anchor="L,T" Offset="22,50" StackGrowth="Bottom" StackPadding="6">
         <Label Style="BodyTextDark16" Size="696,20" String="Your routes"/>
@@ -42,12 +42,12 @@
     </Container>
   </Instance>
   <Instance Name="FDT_LaunchButton">
-    <Button ID="Button" Anchor="L,C" Size="49,49" Texture="LaunchBar_Hook_GreatPeopleButton" Style="ButtonNormalText" TextureOffset="0,-1" StateOffsetIncrement="0,49" ToolTip="Food Trade">
+    <Button ID="Button" Anchor="L,C" Size="49,49" Texture="LaunchBar_Hook_GreatPeopleButton" Style="ButtonNormalText" TextureOffset="0,-1" StateOffsetIncrement="0,49" ToolTip="Food Trading">
       <Label Anchor="C,C" Style="FontNormal10" Color="255,230,160,255" String="FOOD"/>
     </Button>
   </Instance>
   <Instance Name="FDT_CityShortcut">
-    <Button ID="Button" Size="44,53" Texture="UnitPanel_ActionButton" ToolTip="Food Trade: send food from this city">
+    <Button ID="Button" Size="44,53" Texture="UnitPanel_ActionButton" ToolTip="Food Trading: send food from this city">
       <Label Anchor="C,C" Style="FontNormal10" String="FOOD"/>
     </Button>
   </Instance>

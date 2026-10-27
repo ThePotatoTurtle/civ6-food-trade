@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
-<Mod id="ef1d45ad-2e88-49b3-9816-d09074f452f2" version="3">
+<Mod id="ef1d45ad-2e88-49b3-9816-d09074f452f2" version="4">
   <Properties>
-    <Name>Food Trade Development Tools</Name>
-    <Teaser>Development scenarios and in-game checks for Food Trade.</Teaser>
-    <Description>Version 0.2.1.1. Development tools for Food Trade 0.2.1. Start a new game with both mods enabled. In-game and multiplayer validation is pending.</Description>
+    <Name>Food Trading Development Tools</Name>
+    <Teaser>Development scenarios and in-game checks for Food Trading.</Teaser>
+    <Description>Version 0.2.2.1. Development tools for Food Trading 0.2.2. Start a new game with both mods enabled. In-game and multiplayer validation is pending.</Description>
     <Authors>ThePotatoTurtle</Authors>
     <AffectsSavedGames>1</AffectsSavedGames>
     <CompatibleVersions>2.0</CompatibleVersions>
   </Properties>
   <Dependencies>
-    <Mod id="d924452c-f0a0-4a16-a654-6bdf5fd12856" title="Food Trade" />
+    <Mod id="d924452c-f0a0-4a16-a654-6bdf5fd12856" title="Food Trading" />
   </Dependencies>
   <InGameActions>
     <UpdateDatabase id="FDT_DevData"><Properties><LoadOrder>1100</LoadOrder></Properties><File>Data/FDT_DevBuildings.xml</File></UpdateDatabase>
